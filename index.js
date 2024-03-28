@@ -1,4 +1,3 @@
-
 async function generateKeyPairUsingCryptoSubtles() {
   try {
     const keyPair = await window.crypto.subtle.generateKey(
@@ -79,7 +78,7 @@ function encodeToString(src) {
     .join("");
 }
 
-export async function getKeyPair() {
+async function getKeyPair() {
   try {
     const keyPair = await generateKeyPairUsingCryptoSubtles();
     const publicKey = keyPair.publicKey;
@@ -92,7 +91,7 @@ export async function getKeyPair() {
   }
 }
 
-export async function getEnrollmentId(publicKey) {
+async function getEnrollmentId(publicKey) {
   try {
     // var pemPublicKey = await exportPublicKeyToPem(publicKey);
     const encoder = new TextEncoder();
@@ -106,7 +105,7 @@ export async function getEnrollmentId(publicKey) {
   }
 }
 
-export function createCsr(enrollmentID, privateKeyPem, publicKeyPem) {
+function createCsr(enrollmentID, privateKeyPem, publicKeyPem) {
   try {
     const jsrsasign = require("jsrsasign");
     var csr = new jsrsasign.KJUR.asn1.csr.CertificationRequest({
@@ -124,8 +123,7 @@ export function createCsr(enrollmentID, privateKeyPem, publicKeyPem) {
   }
 }
 
-// function name
-export async function register(enrollmentID, csr) {
+async function register(enrollmentID, csr) {
   try {
     class WordEncryptor {
       constructor(seed) {
@@ -245,7 +243,7 @@ export async function register(enrollmentID, csr) {
   }
 }
 
-export async function Transaction(
+async function sendTransaction(
   cert,
   channelName,
   chainCodeName,
@@ -489,7 +487,7 @@ export async function Transaction(
       return err;
     }
     const formattedResponse =
-      "Transaction committed successfully with asset id:";
+      "Transaction committed successfully";
     console.log(`formattedResponse is :${formattedResponse}`);
     return formattedResponse;
   } catch (error) {
@@ -499,3 +497,6 @@ export async function Transaction(
     };
   }
 }
+
+
+module.exports = {getKeyPair ,register ,createCsr ,getEnrollmentId, sendTransaction }
